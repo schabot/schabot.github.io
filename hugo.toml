@@ -1,0 +1,7 @@
+baseURL = 'https://stevenchabot.com/'
+languageCode = 'en-us'
+title = 'Steven Chabot'
+enableRobotsTXT = true
+
+[params]
+  description = 'Personal website for Steven Chabot'
