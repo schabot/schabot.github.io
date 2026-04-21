@@ -1,0 +1,21 @@
+baseURL = 'https://stevenchabot.com/'
+languageCode = 'en-us'
+title = 'Steven Chabot'
+enableRobotsTXT = true
+defaultContentLanguage = 'en'
+
+[pagination]
+  pagerSize = 10
+
+[permalinks]
+  posts = '/posts/:slug/'
+
+[taxonomies]
+  tag = 'tags'
+  category = 'categories'
+
+[params]
+  description = 'Personal website for Steven Chabot'
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
