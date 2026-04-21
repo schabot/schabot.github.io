@@ -38,6 +38,14 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      - name: Verify Gokarna theme submodule
+        run: |
+          if [[ ! -d themes/gokarna ]]; then
+            echo "::error::Missing themes/gokarna. Add and commit the submodule: git submodule add https://github.com/gokarna-theme/gokarna-hugo.git themes/gokarna"
+            echo "::error::Then commit .gitmodules and the themes/gokarna gitlink before re-running Actions."
+            exit 1
+          fi
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v6
