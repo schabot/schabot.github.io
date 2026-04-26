@@ -20,7 +20,3 @@ theme = 'gokarna'
 
 [outputs]
   home = ['HTML', 'RSS', 'JSON']
-
-[module]
-  [[module.imports]]
-    path = 'github.com/gokarna-theme/gokarna-hugo'
