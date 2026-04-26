@@ -1,58 +1,68 @@
 {{ define "main" }}
 {{ $posts := where .Site.RegularPages "Section" "posts" }}
+{{ $tags := .Site.Taxonomies.tags }}
 
 <div class="container home-shell">
-    <section class="home-notebook">
-        <h1>{{ .Site.Title }}</h1>
-        <p class="home-dek">{{ .Site.Params.Description }}</p>
-
-        <div class="home-inline-nav">
-            <a href="/about/">About</a>
-            <span aria-hidden="true">/</span>
-            <a href="/projects/">Projects</a>
-            <span aria-hidden="true">/</span>
-            <a href="/posts/">Writing</a>
-        </div>
-    </section>
-
-    {{ if .Content }}
-    <section class="home-section home-intro">
-        {{ .Content }}
-    </section>
-    {{ end }}
-
-    <section class="home-section">
-        <h2>Latest</h2>
-        {{ if gt (len $posts) 0 }}
-        <div class="home-list">
-            {{ range first 6 ($posts.ByDate.Reverse) }}
-            <article class="home-list-item">
-                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
-            </article>
-            {{ end }}
-        </div>
+    <section class="home-intro">
+        {{ if .Content }}
+            {{ .Content }}
         {{ else }}
-        <p class="home-muted">Writing is not published yet, but the structure is in place.</p>
+            <p>{{ .Site.Params.Description }}</p>
         {{ end }}
     </section>
 
     <section class="home-section">
-        <h2>Explore</h2>
-        <div class="home-list">
-            <article class="home-list-item">
-                <a href="/about/">About</a>
-                <span>A short background and what this site is for.</span>
+        <h2>Latest</h2>
+        {{ if gt (len $posts) 0 }}
+        {{ $latest := index ($posts.ByDate.Reverse) 0 }}
+        <article class="home-latest">
+            <a class="home-latest-link" href="{{ $latest.RelPermalink }}">{{ $latest.Title }}</a>
+            <div class="home-meta">
+                <time datetime="{{ $latest.Date.Format "2006-01-02" }}">{{ $latest.Date.Format "January 2, 2006" }}</time>
+                {{ with $latest.ReadingTime }}
+                <span>&middot; {{ . }} minute read</span>
+                {{ end }}
+            </div>
+            {{ with $latest.Summary }}
+            <p>{{ . | plainify | truncate 190 }}</p>
+            {{ end }}
+        </article>
+        {{ else }}
+        <p class="home-muted">No posts published yet.</p>
+        {{ end }}
+    </section>
+
+    <section class="home-section">
+        <h2>Topics</h2>
+        {{ if gt (len $tags) 0 }}
+        <p class="home-topics">
+            {{ $tagNames := slice }}
+            {{ range $name, $_ := $tags }}
+                {{ $tagNames = $tagNames | append $name }}
+            {{ end }}
+            {{ range $index, $name := sort $tagNames }}
+            {{ if gt $index 0 }}, {{ end }}<a href="{{ "/tags/" | relURL }}{{ $name | urlize }}/">{{ $name }}</a>
+            {{ end }}
+        </p>
+        {{ else }}
+        <p class="home-muted">Topics will appear here as posts are tagged.</p>
+        {{ end }}
+    </section>
+
+    <section class="home-section">
+        <h2>Writing</h2>
+        {{ if gt (len $posts) 0 }}
+        <div class="home-writing">
+            {{ range $posts.ByDate.Reverse }}
+            <article class="home-writing-item">
+                <span class="home-writing-date">{{ .Date.Format "2006 · 01" }}</span>
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
             </article>
-            <article class="home-list-item">
-                <a href="/projects/">Projects</a>
-                <span>Build logs, experiments, and finished work.</span>
-            </article>
-            <article class="home-list-item">
-                <a href="/posts/">Writing</a>
-                <span>Notes, essays, and updates as they are published.</span>
-            </article>
+            {{ end }}
         </div>
+        {{ else }}
+        <p class="home-muted">Writing archive coming soon.</p>
+        {{ end }}
     </section>
 </div>
 {{ end }}
