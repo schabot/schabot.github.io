@@ -1,0 +1,58 @@
+{{ define "main" }}
+{{ $posts := where .Site.RegularPages "Section" "posts" }}
+
+<div class="container home-shell">
+    <section class="home-notebook">
+        <h1>{{ .Site.Title }}</h1>
+        <p class="home-dek">{{ .Site.Params.Description }}</p>
+
+        <div class="home-inline-nav">
+            <a href="/about/">About</a>
+            <span aria-hidden="true">/</span>
+            <a href="/projects/">Projects</a>
+            <span aria-hidden="true">/</span>
+            <a href="/posts/">Writing</a>
+        </div>
+    </section>
+
+    {{ if .Content }}
+    <section class="home-section home-intro">
+        {{ .Content }}
+    </section>
+    {{ end }}
+
+    <section class="home-section">
+        <h2>Latest</h2>
+        {{ if gt (len $posts) 0 }}
+        <div class="home-list">
+            {{ range first 6 ($posts.ByDate.Reverse) }}
+            <article class="home-list-item">
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+            </article>
+            {{ end }}
+        </div>
+        {{ else }}
+        <p class="home-muted">Writing is not published yet, but the structure is in place.</p>
+        {{ end }}
+    </section>
+
+    <section class="home-section">
+        <h2>Explore</h2>
+        <div class="home-list">
+            <article class="home-list-item">
+                <a href="/about/">About</a>
+                <span>A short background and what this site is for.</span>
+            </article>
+            <article class="home-list-item">
+                <a href="/projects/">Projects</a>
+                <span>Build logs, experiments, and finished work.</span>
+            </article>
+            <article class="home-list-item">
+                <a href="/posts/">Writing</a>
+                <span>Notes, essays, and updates as they are published.</span>
+            </article>
+        </div>
+    </section>
+</div>
+{{ end }}
