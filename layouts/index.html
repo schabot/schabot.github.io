@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{ $posts := where .Site.RegularPages "Section" "posts" }}
+{{ $posts := where .Site.Pages "Params.type" "post" }}
 {{ $tags := .Site.Taxonomies.tags }}
 
 <div class="container home-shell">
