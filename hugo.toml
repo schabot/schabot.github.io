@@ -16,7 +16,36 @@ theme = 'gokarna'
   category = 'categories'
 
 [params]
-  description = 'Personal website for Steven Chabot'
+  accentColor = '#c2410c'
+  description = 'Personal site for Steven Chabot: writing, projects, and notes in progress.'
+  footer = 'Steven Chabot'
+  metaKeywords = ['steven chabot', 'personal site', 'blog', 'projects', 'hugo']
+  showBackToTopButton = true
+
+[menu]
+  [[menu.main]]
+    name = 'Home'
+    pre = "<span data-feather='home'></span>"
+    url = '/'
+    weight = 1
+
+  [[menu.main]]
+    name = 'About'
+    pre = "<span data-feather='user'></span>"
+    url = '/about/'
+    weight = 2
+
+  [[menu.main]]
+    name = 'Posts'
+    pre = "<span data-feather='edit-3'></span>"
+    url = '/posts/'
+    weight = 3
+
+  [[menu.main]]
+    name = 'Projects'
+    pre = "<span data-feather='code'></span>"
+    url = '/projects/'
+    weight = 4
 
 [outputs]
-  home = ['HTML', 'RSS', 'JSON']
+  home = ['HTML', 'RSS']
